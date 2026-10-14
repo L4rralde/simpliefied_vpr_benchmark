@@ -88,19 +88,3 @@ class Evaluator:
             logging.info("-"*80)
             df.to_csv(df_path, index=False)
         
-    
-class EvalMegaloc(Evaluator):
-    def define_model(self):
-        model = torch.hub.load("gmberton/MegaLoc", "get_trained_model")
-        model_name = "MegaLoc"
-        features_dim = 8448
-        return model, model_name, features_dim
-
-    def define_input_transform(self):
-        transform = tfm.Compose([
-            tfm.ToTensor(),
-            tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            tfm.Resize(size=[322, 322], antialias=True),
-        ])
-
-        return transform
