@@ -44,6 +44,10 @@ class MegaLoc(Model):
 class DinoSalad(Model):
     @staticmethod
     def get_model(**kwargs):
+        repo_path = kwargs.get('repo_path', None)
+        if repo_path is None:
+            raise RuntimeError("--repo_path is required")
+        sys.path.append(repo_path)
         return torch.hub.load("serizba/salad", "dinov2_salad")
 
     @staticmethod
@@ -62,12 +66,19 @@ class DinoSalad(Model):
 class BoQ(Model):
     @staticmethod
     def get_model(**kwargs):
-        return torch.hub.load(
-            "amaralibey/bag-of-queries",
-            "get_trained_boq",
-            backbone_name="dinov2",
-            output_dim=12288
-        )
+        class _BoQ(torch.nn.Module):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.vpr_model = torch.hub.load(
+                    "amaralibey/bag-of-queries",
+                    "get_trained_boq",
+                    backbone_name="dinov2",
+                    output_dim=12288
+                )
+            def forward(self, x):
+                return self.vpr_model(x)[0]
+
+        return _BoQ()
 
     @staticmethod
     def get_transform(**kwargs):
@@ -179,36 +190,6 @@ class EDTformer(Model):
     DESC_DIM = 4096
 
 
-from network import VPRmodel
-
-#--backbone=dinov2 --freeze_te=8 --num_learnable_aggregation_tokens=8 --resume=/path/to/trained/model/ImAge_GSV.pth
-def get_model(ckpt: str) -> torch.nn.Module:
-    args = Dict({
-        'backbone': 'dinov2',
-        'aggregator': None,
-        'freeze_te': 8,
-        'num_learnable_aggregation_tokens': 8,
-        'resume': ckpt,
-        'features_dim': 8*768
-    })
-    model = VPRmodel(args)
-
-    checkpoint = torch.load(ckpt, map_location='cpu', weights_only=False)
-    if 'model_state_dict' in checkpoint:
-        state_dict = checkpoint['model_state_dict']
-    else:
-        # The pre-trained models that we provide in the README do not have 'state_dict' in the keys as
-        # the checkpoint is directly the state dict
-        state_dict = checkpoint
-    # if the model contains the prefix "module" which is appendend by
-    # DataParallel, remove it to avoid errors when loading dict
-    if list(state_dict.keys())[0].startswith('module'):
-        state_dict = OrderedDict({k.replace('module.', ''): v for (k, v) in state_dict.items()})
-    model.load_state_dict(state_dict)
-    model = torch.nn.DataParallel(model)
-    return model
-
-
 class ImAge(Model):
     @staticmethod
     def get_model(**kwargs):
@@ -224,7 +205,7 @@ class ImAge(Model):
         class ImageArgs:
             backbone="dinov2"
             aggregator=None
-            freeze_t=8
+            freeze_te=8
             num_learnable_aggregation_tokens=8
             resume=ckpt
             features_dim=6144 #8*768
@@ -268,8 +249,5 @@ class ImAge(Model):
     DESC_DIM = 6144
 
 
-ALL_MODELS = [
-    obj
-    for _, obj in list(globals().items())
-    if isinstance(obj, Model)
-]
+ALL_MODELS = [MegaLoc, BoQ,  DinoSalad, MixVPR, EDTformer, ImAge]
+
