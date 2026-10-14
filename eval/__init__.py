@@ -16,6 +16,7 @@ import logging
 from datetime import datetime
 from abc import ABC, abstractmethod
 from typing import Tuple, Callable
+from argparse import ArgumentParser
 
 import torch
 import torchvision.transforms as tfm
@@ -34,7 +35,7 @@ class Evaluator:
         self.model, self.model_name, self.features_dim = self.define_model()
         self.input_transform = self.define_input_transform()
 
-    def get_parser(self):
+    def get_parser(self) -> ArgumentParser:
         return parser.get_parser()
 
     @abstractmethod    

@@ -266,3 +266,10 @@ class ImAge(Model):
 
 
     DESC_DIM = 6144
+
+
+ALL_MODELS = [
+    obj
+    for _, obj in list(globals().items())
+    if isinstance(obj, Model)
+]

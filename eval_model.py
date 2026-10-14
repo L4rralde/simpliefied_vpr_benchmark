@@ -4,12 +4,6 @@ import logging
 from eval import Evaluator
 import models
 
-all_model_classes = [
-    obj
-    for _, obj in inspect.getmembers(models, inspect.isclass)
-    if obj.__module__ == models.__name__ and isinstance(obj, models.Model)
-]
-
 
 class GeneralEvaluator(Evaluator):
     def get_parser(self):
@@ -21,14 +15,14 @@ class GeneralEvaluator(Evaluator):
         return parser
 
     def get_model_namespace(self) -> models.Model:
-        model_names = [obj.__name__.upper() for obj in all_model_classes]
+        model_names = [obj.__name__.upper() for obj in models.ALL_MODELS]
         try:
             model_idx = model_names.index(self.args.model.upper())
         except ValueError as E:
             logging.error(f"{self.args.model} is not a valid model name. See {model_names}")
             raise E
 
-        model_ns: models.Model = all_model_classes[model_idx]
+        model_ns: models.Model = models.ALL_MODELS[model_idx]
         return model_ns
 
     def define_model(self):
