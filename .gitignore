@@ -14,4 +14,8 @@ __MACOSX/
 # other
 pretrained
 *.pth
+*.pt
+*.ckpt
 datasets
+*.csv
+*.sh
