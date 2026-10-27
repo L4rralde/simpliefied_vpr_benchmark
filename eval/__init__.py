@@ -46,7 +46,7 @@ class Evaluator:
     def define_input_transform(self) -> Callable:
         raise NotImplementedError()
 
-    def run(self, test_datasets=["pitts250k", "pitts30k", "baidu", "eynsham", "st_lucia", "nordland", "amstertime"]):
+    def run(self, test_datasets=["pitts250k", "pitts30k", "baidu", "eynsham", "st_lucia", "nordland", "amstertime", "tokyo247"]):
         start_time = datetime.now()
         self.args.save_dir = join(
             "test",
