@@ -1,4 +1,3 @@
-import inspect
 import logging
 
 from eval import Evaluator
