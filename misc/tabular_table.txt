@@ -1,0 +1,21 @@
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+        \toprule
+         & \multicolumn{2}{c}{MSLS val} & \multicolumn{2}{c}{SPED} & \multicolumn{2}{c}{Pitts250k-test} & \multicolumn{2}{c}{Pitts30k-test}  & \multicolumn{2}{c}{Baidu} & \multicolumn{2}{c}{Eynsham} & \multicolumn{2}{c}{Nordland} & \multicolumn{2}{c}{Amstertime} & \multicolumn{2}{c}{Tokyo247}\\
+        Model &  R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$  & R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$ & R1$\uparrow$ & R5$\uparrow$ \\ 
+        \midrule
+        DINOv2 SALAD~\cite{salad} & 92.03 & 96.22 & 91.93 & 96.06 & 95.08 & 98.57 & 92.37 & 96.3 & 72.72 & 88.68 & 91.59 & 95.053 & 86.46 & 93.846 & 58.49 & 78.88 & 94.6 & 97.46\\
+
+        MegaLoc~\cite{megaloc} & 93.51 & 97.03 & 90.28 & 95.22 & 96.38 & 98.89 & 94.07 & 97.33 & 87.749 & 95.57 & 92.59 & 95.98 & 94.23 & 97.87 & 62.88 & 84.32 & 96.51 & 98.1 \\
+        
+        BoQ~\cite{BoQ} & 93.78 & 96.76 & 92.42 & 95.88 & 96.63 & 99.11 & 93.69 & 97.01 & 77.71 & 91.053 & 92.21 & 95.59 & 90.649 & 96.04 & 62.96 & 81.64 & 96.51 & 98.1 \\ 
+        
+        MixVPR~\cite{mixvpr} & 87.97 & 93.11 & 84.351 & 92.59 & 94.21 & 98.19 & 91.49 & 95.5 & 71.38 & 89.96 & 89.5508 & 93.19 & 76.58 & 87.28 & 40.94 & 59.38 & 86.67 & 92.06\\ 
+    
+        EDTformer~\cite{edt_former} & 91.89 & 96.89 & 92.59 & 96.05 & 95.99 & 98.83 & 93.63 & 96.948 & 81.73 & 93.11 & 92.17 & 95.54 & 88.5 & 95.21 & 65.1502 & 84.57 & 97.46 & 98.41\\
+        
+        ImAge~\cite{ImAge} & 94.46 & 97.30 & 90.94 & 95.55 & 96.4 & 99.07 & 94.09 & 97.32 & 66.053 & 86.1 & 92.7 & 95.92 & 97.7 & 99.33 & 59.3 & 80.42 & 97.14 & 98.41 \\
+        \hline
+        VeGGieT SALAD+ & 92.57 & 97.43 & 90.28 & 94.56 & 95.57 & 98.62 & 93.045 & 96.98 & 82.2 & 92.83 & 92.41 & 95.69 & 79.37 & 88.34 & 63.53 & 83.1 & 97.46 & 98.73\\
+        VeGGieT SALAD-$\Omega$ & 90.54 & 96.35 & 89.79 & 95.06 & 95.62 & 98.77 & 93.06 & 97.24 & 77.03 & 92.52 & 91.96 & 95.61 & 73.86 & 83.77 & 60.93 & 81.72 & 97.46 & 98.73\\
+        \bottomrule
+    \end{tabular}
